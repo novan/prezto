@@ -11,3 +11,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+if [[ -s "${ZDOTDIR:-$HOME}/.zsh_env" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zsh_env"
+fi
+
+if [[ -s "${ZDOTDIR:-$HOME}/.aliases" ]]; then
+  source "${ZDOTDIR:-$HOME}/.aliases"
+fi

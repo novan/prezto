@@ -71,3 +71,10 @@ fi
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+# Go
+export GOPATH="/Users/novan/Projects/Go"
+export GOROOT="/usr/local/opt/go/libexec"
+export PATH=$PATH:$GOPATH/bin
+export GO111MODULE=on
+export GOSUMDB=off
