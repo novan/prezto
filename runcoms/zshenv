@@ -9,3 +9,56 @@
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+export EDITOR='/usr/local/bin/vim'
+export VISUAL='/usr/local/bin/vim'
+
+# IDE
+export PATH=$PATH:"/Applications/Sublime Text.app/Contents/SharedSupport/bin":"/Applications/Visual Studio Code.app/Contents/Resources/app/bin":"/Applications/Sublime Merge.app/Contents/MacOS":"/Applications/Cursor.app/Contents/Resources/app/bin"
+export PIP_DEFAULT_TIMEOUT=100
+
+# Go
+export GOPATH="/Users/novan/Projects/Go"
+export GOROOT="/usr/local/opt/go/libexec"
+export PATH=$PATH:$GOPATH/bin
+export GO111MODULE=on
+export GOSUMDB=off
+export GOPROXY=direct
+
+# Python
+# export PATH=$PATH:"/Users/novan/.pyenv/shims"
+#
+
+export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib"
+export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include"
+export CPPFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix zlib)/include"
+export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig":"$(brew --prefix zlib)/lib/pkgconfig"
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# PostgreSQL
+export PATH=$PATH:/usr/local/opt/postgresql@11/bin
+
+# bun
+[ -s "/Users/novan/.bun/_bun" ] && source "/Users/novan/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/novan/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Flutter
+export PATH=$HOME/Projects/flutter/bin:$PATH
+export CHROME_EXECUTABLE='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'
+
+# node
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
