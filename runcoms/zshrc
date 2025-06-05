@@ -6,11 +6,98 @@
 #
 
 # Source Prezto.
+echo "Initializing..."
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Customize to your needs...
 if [[ -s "${ZDOTDIR:-$HOME}/.aliases" ]]; then
+  echo "Loading aliases..."
   source "${ZDOTDIR:-$HOME}/.aliases"
 fi
+
+echo "Loading pyenv.."
+# export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib"
+# export CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include"
+# export CPPFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix zlib)/include"
+# export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig":"$(brew --prefix zlib)/lib/pkgconfig"
+
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+
+if command -v pyenv >/dev/null; then
+ eval "$(pyenv init -)"
+  # Check if venv directory exists in current directory and activate it
+  if [ -d "venv" ]; then
+      source venv/bin/activate
+  fi
+fi
+
+echo "Loading nvm..."
+function load_nvm() {
+  # Load manually installed NVM into the shell session.
+  if [[ -s "${NVM_DIR:=$HOME/.nvm}/nvm.sh" ]]; then
+    source "${NVM_DIR}/nvm.sh"
+
+  # Load package manager installed NVM into the shell session.
+  elif (( $+commands[brew] )) && \
+    [[ -d "${nvm_prefix::="$(brew --prefix 2> /dev/null)"/opt/nvm}" ]]; then
+    source "$(brew --prefix nvm)/nvm.sh"
+    unset nvm_prefix
+
+  # Load manually installed nodenv into the shell session.
+  elif [[ -s "${NODENV_ROOT:=$HOME/.nodenv}/bin/nodenv" ]]; then
+    path=("${NODENV_ROOT}/bin" $path)
+    eval "$(nodenv init - --no-rehash zsh)"
+
+  # Load package manager installed nodenv into the shell session.
+  elif (( $+commands[nodenv] )); then
+    eval "$(nodenv init - --no-rehash zsh)"
+
+  # Return if requirements are not found.
+  elif (( ! $+commands[node] )); then
+    return 1
+  fi
+
+  # Load NPM and known helper completions.
+  typeset -A compl_commands=(
+    npm   'npm completion'
+    grunt 'grunt --completion=zsh'
+    gulp  'gulp --completion=zsh'
+  )
+
+  for compl_command in "${(k)compl_commands[@]}"; do
+    if (( $+commands[$compl_command] )); then
+      cache_file="${TMPDIR:-/tmp}/prezto-$compl_command-cache.$UID.zsh"
+
+      # Completion commands are slow; cache their output if old or missing.
+      if [[ "$commands[$compl_command]" -nt "$cache_file" \
+            || "${ZDOTDIR:-$HOME}/.zpreztorc" -nt "$cache_file" \
+            || ! -s "$cache_file" ]]; then
+        command ${=compl_commands[$compl_command]} >! "$cache_file" 2> /dev/null
+      fi
+
+      source "$cache_file"
+
+      unset cache_file
+    fi
+  done
+
+  unset compl_command{s,}
+  }
+
+lazy_load load_nvm nvm node npm gulp eslint yarn standard react-native npx prisma prettier
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/mc mc
+
+echo "Done!"
+export GPG_TTY=$(tty)
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun completions
+[ -s "/Users/novan/.bun/_bun" ] && source "/Users/novan/.bun/_bun"

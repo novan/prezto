@@ -29,3 +29,6 @@
 	path = modules/prompt/external/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
 	shallow = true
+[submodule "modules/lazy-load"]
+	path = modules/lazy-load
+	url = https://github.com/xcv58/zsh-lazy-load.git
