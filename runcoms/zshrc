@@ -101,3 +101,56 @@ export GPG_TTY=$(tty)
 
 # bun completions
 [ -s "/Users/novan/.bun/_bun" ] && source "/Users/novan/.bun/_bun"
+
+
+# List of aliases
+alias ll="ls -lh"
+alias la="ls -A"
+
+alias gl="git pull --rebase"
+
+alias pa="$(which php) artisan"
+alias genkey="date +%s | shasum | base64 | head -c 32 ; echo"
+alias myip="curl icanhazip.com"
+alias phpunit="./vendor/bin/phpunit"
+alias codecept="./vendor/bin/codecept"
+alias mage="php bin/magento"
+alias pgen="protoc --proto_path=. --go_out=. --go_opt=paths=source_relative  *.proto"
+alias whatmyip="wget -qO- ipinfo.io/ip"
+
+# services
+alias qasir_my_tunnel='ssh -L 33306:qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com:3306 qasir-app'
+
+# Docker
+alias docker_kill_all='docker kill $(docker ps -q)'
+alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
+
+#alias gcb="for BRANCH in $(git branch | sed 's/  //' | sed 's/\* //' | grep -v master | grep -v develop); do; git branch -D $BRANCH; done"
+#alias gcB="for BRANCH in $(git branch --remote | sed 's/  //' | sed 's/origin\///' | grep -v master | grep -v develop); do; git push origin :$BRANCH; done"
+
+# kube
+alias k8prod="kubectl --namespace core-prod"
+alias k8dev="kubectl --namespace core-dev"
+alias k8mon="kubectl --namespace monitoring"
+alias edit_report="EDITOR=vim k8prod edit service qasir-report-gateway"
+
+# mysql
+alias my_kill_report="mysql_kill_sleep qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com report_ro R3eP0rtRoooO3121278"
+alias my_kill_exec_report="mysql_kill_exec qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com report_ro R3eP0rtRoooO3121278"
+alias my_report="mysql -h qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com -u report_ro -pR3eP0rtRoooO3121278"
+alias my_replica_report="mysql -h qasirdb-replica.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com -u report_ro -pR3eP0rtRoooO3121278"
+alias my_kill_qasir="mysql_kill_sleep qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com usr_qasir @@K@00PWslSLQ-_"
+alias my_kill_replica_qasir="mysql_kill_sleep qasirdb-replica.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com usr_qasir @@K@00PWslSLQ-_"
+alias my_qasir="mysql -h qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com -u usr_qasir -p@@K@00PWslSLQ-_"
+alias my_kill_apps="mysql_kill_sleep qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com qasir_apps QQqlqo1\*29201OQl1_+"
+alias my_kill_replica_apps="mysql_kill_sleep qasirdb-replica.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com qasir_apps QQqlqo1\*29201OQl1_+"
+alias my_apps="mysql -h qasir-db-prod.cmshpax1kxy4.ap-southeast-1.rds.amazonaws.com -u qasir_apps -pQQqlqo1\*29201OQl1_+"
+alias connect_proxysql="mysql -h 10.10.10.56 -P 6032 -u oneqasir -poneQasir755di\#"
+
+# Python
+# alias python=python3
+alias pip=pip3
+
+# Vim
+alias vim=/usr/local/bin/vim
